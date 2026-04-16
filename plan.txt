@@ -1,0 +1,33 @@
+### Classes
+User Class:
+—user_id
+//—user_login
+//—user_password
+//—user_avatar
+—username
+
+Game Class:
+—user_id derived from User Class
+—score
+—date/time
+—game version
+
+### Display
+Leaderboard:
+—username
+—score
+—date/time
+—game version
+
+### SORTS
+Sort Time:
+—highest score ALL TIME
+—highest score WEEK
+—highest score MONTH
+—highest score YEAR
+—newest scores
+
+Sort Type:
+#Default never display a user more than once
+—sort by game version (Default any)
+—sort by user

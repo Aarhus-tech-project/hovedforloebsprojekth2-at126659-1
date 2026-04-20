@@ -1,16 +1,17 @@
 ### Classes
-User Class:
+users:
 —user_id
 //—user_login
 //—user_password
 //—user_avatar
 —username
 
-Game Class:
+scores:
+—score_id
 —user_id derived from User Class
 —score
-—date/time
-—game version
+—created_at
+—game_version
 
 ### Display
 Leaderboard:

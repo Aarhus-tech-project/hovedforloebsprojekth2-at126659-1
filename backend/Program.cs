@@ -1,6 +1,6 @@
 using FullstackProject.Backend;
 
-var builder = WebApplicationBuilder.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("AllowFrontend");
 app.UseAuthorization();
+app.MapGet("/", () => Results.Ok("Backend is running. Open /swagger to view the API."));
 app.MapControllers();
 
 app.Run();

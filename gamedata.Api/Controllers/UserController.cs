@@ -20,5 +20,12 @@ namespace User.Controllers
                 return NotFound();
             return user;
         }
+
+        [HttpPost]
+        public ActionResult<AppUser> Post(string username, int? avatar, string password)
+        {
+            var createdUser = UserService.Post(username, avatar, password);
+            return NoContent();
+        }
     }
 }

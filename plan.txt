@@ -32,3 +32,47 @@ Sort Type:
 #Default never display a user more than once
 —sort by game version (Default any)
 —sort by user
+
+
+
+
+1. Define the score data model
+   - `users`: `user_id`, `username`
+   - `scores` or `games`: `score_id`, `user_id`, `score`, `created_at`, `game_version`
+   - Decide whether a player can submit multiple scores per session or only one final score.
+
+2. Pick the local stack
+   - Database: SQLite for simplest local development.
+   - Backend: a small API in Python, Node.js, or Go.
+   - Godot connects only to the API over HTTP.
+
+3. Design the API endpoints
+   - `POST /score` to submit a new highscore.
+   - `GET /leaderboard` to fetch the top scores.
+   - `GET /leaderboard?scope=all-time|week|month|year`
+   - Optional later: `POST /login` or anonymous player IDs if you want persistent users.
+
+4. Build the database schema
+   - Add tables, indexes, and constraints.
+   - Index `user_id`, `score`, and `created_at` for leaderboard speed.
+   - Decide if you want one row per score or one row per user with a best score.
+
+5. Connect Godot to the backend
+   - Use Godot’s HTTPRequest node to send score data when a run ends.
+   - Load the leaderboard from the API and show it in your UI.
+   - Add basic error handling for offline mode and server failures.
+
+6. Add score rules and validation
+   - Prevent obviously invalid scores.
+   - Decide how to handle duplicate submissions.
+   - If cheating matters, validate more on the backend than in the client.
+
+7. Test the full flow locally
+   - Start the backend.
+   - Start the game.
+   - Submit a score.
+   - Confirm the row is saved in SQLite.
+   - Confirm the leaderboard refreshes correctly.
+
+8. Plan the future upgrade path
+   - When you move beyond local testing, you can swap SQLite for PostgreSQL and host the API without changing much in the Godot client.

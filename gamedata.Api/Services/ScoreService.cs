@@ -16,9 +16,19 @@ namespace Score.Services
             };
         }
         public static List<GameScore> GetAll() => Scores;
-        public static List<GameScore> GetAll(int count, bool allowDuplicatesUsers = false, string? gameVersion = null)
+        public static List<GameScore> GetAll(
+            int count,
+            bool allowDuplicatesUsers = false,
+            string? gameVersion = null,
+            LeaderboardTimeSlot timeSlot = LeaderboardTimeSlot.AllTime)
         {
             var filteredScores = Scores.AsEnumerable();
+            var timeWindowStart = GetTimeWindowStart(timeSlot);
+
+            if (timeWindowStart.HasValue)
+            {
+                filteredScores = filteredScores.Where(s => s.CreatedAt >= timeWindowStart.Value);
+            }
 
             if (!string.IsNullOrWhiteSpace(gameVersion))
             {
@@ -42,6 +52,19 @@ namespace Score.Services
                 .Take(count)
                 .ToList();
         }
+
+        private static DateTime? GetTimeWindowStart(LeaderboardTimeSlot timeSlot)
+        {
+            return timeSlot switch
+            {
+                LeaderboardTimeSlot.AllTime => null,
+                LeaderboardTimeSlot.Week => DateTime.UtcNow.AddDays(-7),
+                LeaderboardTimeSlot.Month => DateTime.UtcNow.AddMonths(-1),
+                LeaderboardTimeSlot.Year => DateTime.UtcNow.AddYears(-1),
+                _ => null
+            };
+        }
+        
         public static List<GameScore> GetTop(int count) => Scores
             .OrderByDescending(s => s.Game_Score)
             .Take(count)

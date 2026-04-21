@@ -23,6 +23,7 @@ namespace User.Services
             Users.Add(user);
             return user;
         }
+        public static AppUser? Get(string username) => Users.FirstOrDefault(u => u.Username == username);
     }
     
     // public interface IUserService

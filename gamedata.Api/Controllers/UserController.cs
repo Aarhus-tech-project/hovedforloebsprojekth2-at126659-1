@@ -21,6 +21,16 @@ namespace User.Controllers
             return user;
         }
 
+        [HttpGet]
+        [Route("{id}/username")]
+        public ActionResult<string> GetUsername(int id)
+        {
+            var user = UserService.Get(id);
+            if (user == null)
+                return NotFound();
+            return user.Username;
+        }
+
         [HttpPost]
         public ActionResult<AppUser> Post(string username, int? avatar, string password)
         {

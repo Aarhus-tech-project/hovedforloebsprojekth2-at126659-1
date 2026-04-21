@@ -16,6 +16,36 @@ namespace Score.Services
             };
         }
         public static List<GameScore> GetAll() => Scores;
+        public static List<GameScore> GetAll(int count, bool allowDuplicatesUsers = false, string? gameVersion = null)
+        {
+            var filteredScores = Scores.AsEnumerable();
+
+            if (!string.IsNullOrWhiteSpace(gameVersion))
+            {
+                filteredScores = filteredScores.Where(s => s.Game_Version == gameVersion);
+            }
+
+            if (!allowDuplicatesUsers)
+            {
+                // Keep only each user's best score.
+                filteredScores = filteredScores
+                    .GroupBy(s => s.UserId)
+                    .Select(g => g
+                        .OrderByDescending(s => s.Game_Score)
+                        .ThenByDescending(s => s.CreatedAt)
+                        .First());
+            }
+
+            return filteredScores
+                .OrderByDescending(s => s.Game_Score)
+                .ThenByDescending(s => s.CreatedAt)
+                .Take(count)
+                .ToList();
+        }
+        public static List<GameScore> GetTop(int count) => Scores
+            .OrderByDescending(s => s.Game_Score)
+            .Take(count)
+            .ToList();
         public static GameScore? Get(int id) => Scores.FirstOrDefault(s => s.ScoreId == id);
         public static GameScore? Post(int userId, int gameScore, string gameVersion)
         {

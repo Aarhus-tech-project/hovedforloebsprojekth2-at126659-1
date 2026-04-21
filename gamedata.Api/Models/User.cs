@@ -3,7 +3,7 @@ namespace User.Models
     public class AppUser
     {
         public int Id { get; set; }
-
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         //attributes
         public string Username { get; set; } = null!;
         public int? Avatar { get; set; }

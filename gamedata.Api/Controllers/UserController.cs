@@ -37,5 +37,15 @@ namespace User.Controllers
             var createdUser = UserService.Post(username, avatar, password);
             return NoContent();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult<AppUser> Delete(int id)
+        {
+            var deletedUser = UserService.Delete(id);
+            if (deletedUser == null)
+                return NotFound();
+            return NoContent();
+        }
     }
 }

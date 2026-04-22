@@ -27,6 +27,15 @@ namespace User.Services
             return user;
         }
         public static AppUser? Get(string username) => Users.FirstOrDefault(u => u.Username == username);
+        public static AppUser? Delete(int id)
+        {
+            var user = Get(id);
+            if (user != null)
+            {
+                Users.Remove(user);
+            }
+            return user;
+        }
     }
     
     // public interface IUserService

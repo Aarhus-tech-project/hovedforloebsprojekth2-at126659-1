@@ -27,5 +27,15 @@ namespace Score.Controllers
             var createdScore = ScoreService.Post(userId, gameScore, gameVersion);
             return NoContent();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult<GameScore> Delete(int id)
+        {
+            var deletedScore = ScoreService.Delete(id);
+            if (deletedScore == null)
+                return NotFound();
+            return NoContent();
+        }
     }
 }

@@ -91,5 +91,14 @@ namespace Score.Services
             Scores.Add(score);
             return score;
         }
+        public static GameScore? Delete(int id)
+        {
+            var score = Get(id);
+            if (score != null)
+            {
+                Scores.Remove(score);
+            }
+            return score;
+        }
     }
 }

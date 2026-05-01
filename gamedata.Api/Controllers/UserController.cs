@@ -37,6 +37,7 @@ namespace User.Controllers
             var existingUser = UserService.Get(username);
             if (existingUser != null)
                 return Conflict("Username already exists.");
+            UserService.Post(username, avatar, password);
 
             return NoContent();
         }

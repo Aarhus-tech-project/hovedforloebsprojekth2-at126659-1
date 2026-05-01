@@ -57,13 +57,13 @@ namespace Score.Services
                     .GroupBy(s => s.UserId)
                     .Select(g => g
                         .OrderByDescending(s => s.Game_Score)
-                        .ThenByDescending(s => s.CreatedAt)
+                        .ThenByDescending(s => s.ScoreId)
                         .First());
             }
 
             return filteredScores
                 .OrderByDescending(s => s.Game_Score)
-                .ThenByDescending(s => s.CreatedAt)
+                .ThenByDescending(s => s.ScoreId)
                 .Take(count)
                 .ToList();
         }

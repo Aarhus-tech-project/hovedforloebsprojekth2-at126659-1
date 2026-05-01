@@ -24,7 +24,7 @@ namespace Score.Controllers
         [HttpPost]
         public ActionResult<GameScore> Post(int userId, int gameScore, string gameVersion)
         {
-            var createdScore = ScoreService.Post(userId, gameScore, gameVersion);
+            ScoreService.Post(userId, gameScore, gameVersion);
             return NoContent();
         }
 

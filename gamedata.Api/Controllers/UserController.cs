@@ -34,7 +34,11 @@ namespace User.Controllers
         [HttpPost]
         public ActionResult<AppUser> Post(string username, int? avatar, string password)
         {
-            var createdUser = UserService.Post(username, avatar, password);
+            var existingUser = UserService.Get(username);
+            if (existingUser != null)
+                return Conflict("Username already exists.");
+            UserService.Post(username, avatar, password);
+
             return NoContent();
         }
 

@@ -13,7 +13,7 @@ namespace Leaderboard.Controllers
         [HttpGet]
         public ActionResult<List<LeaderboardScore>> GetAll(
             int count,
-            bool allowDuplicatesUsers = false,
+            bool allowDuplicateUsers = false,
             string? gameVersion = null,
             LeaderboardTimeSlot timeSlot = LeaderboardTimeSlot.AllTime)
         {
@@ -22,7 +22,7 @@ namespace Leaderboard.Controllers
             if (ScoreService.GetAll().Count == 0)
                 return NoContent();
 
-            var scores = ScoreService.GetAll(count, allowDuplicatesUsers, gameVersion, timeSlot);
+            var scores = ScoreService.GetAll(count, allowDuplicateUsers, gameVersion, timeSlot);
             if (scores.Count == 0)
                 return NoContent();
 

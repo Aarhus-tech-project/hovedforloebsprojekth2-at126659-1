@@ -33,7 +33,7 @@ namespace Score.Services
         public static List<GameScore> GetAll() => Scores;
         public static List<GameScore> GetAll(
             int count,
-            bool allowDuplicatesUsers = false,
+            bool allowDuplicateUsers = false,
             string? gameVersion = null,
             LeaderboardTimeSlot timeSlot = LeaderboardTimeSlot.AllTime)
         {
@@ -50,20 +50,20 @@ namespace Score.Services
                 filteredScores = filteredScores.Where(s => s.Game_Version == gameVersion);
             }
 
-            if (!allowDuplicatesUsers)
+            if (!allowDuplicateUsers)
             {
                 // Keep only each user's best score.
                 filteredScores = filteredScores
                     .GroupBy(s => s.UserId)
                     .Select(g => g
                         .OrderByDescending(s => s.Game_Score)
-                        .ThenByDescending(s => s.CreatedAt)
+                        .ThenByDescending(s => s.ScoreId)
                         .First());
             }
 
             return filteredScores
                 .OrderByDescending(s => s.Game_Score)
-                .ThenByDescending(s => s.CreatedAt)
+                .ThenByDescending(s => s.ScoreId)
                 .Take(count)
                 .ToList();
         }

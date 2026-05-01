@@ -22,6 +22,11 @@ namespace User.Services
         public static AppUser? Get(int id) => Users.FirstOrDefault(u => u.Id == id);
         public static AppUser? Post(string username, int? avatar, string password)
         {
+            if (Get(username) != null)
+            {
+                return null;
+            }
+
             var user = new AppUser { Id = Users.Count + 1, CreatedAt = DateTime.UtcNow, Username = username, Avatar = avatar, Password = password };
             Users.Add(user);
             return user;
